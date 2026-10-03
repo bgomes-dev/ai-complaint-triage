@@ -1,0 +1,446 @@
+{
+  "taxonomy": [
+    {
+      "product_code": "01",
+      "product_en": "Direct debits",
+      "product_es": "Adeudos domiciliados",
+      "matters": [
+        {
+          "matter_code": "1.1",
+          "matter_en": "SEPA direct debits",
+          "matter_es": "Adeudos directos SEPA"
+        }
+      ]
+    },
+    {
+      "product_code": "02",
+      "product_en": "Guarantees",
+      "product_es": "Avales",
+      "matters": [
+        {
+          "matter_code": "2.1",
+          "matter_en": "Cancellation",
+          "matter_es": "Cancelación"
+        },
+        {
+          "matter_code": "2.2",
+          "matter_en": "Enforcement / calling of the guarantee",
+          "matter_es": "Ejecución"
+        }
+      ]
+    },
+    {
+      "product_code": "03",
+      "product_en": "Current / savings accounts",
+      "product_es": "Cuentas corrientes/de ahorro",
+      "matters": [
+        {
+          "matter_code": "3.1",
+          "matter_en": "Unauthorised debits / credits",
+          "matter_es": "Adeudos/abonos no autorizados"
+        },
+        {
+          "matter_code": "3.2",
+          "matter_en": "Account opening/contract execution",
+          "matter_es": "Apertura/formalización del contrato"
+        },
+        {
+          "matter_code": "3.3",
+          "matter_en": "Change of account holder",
+          "matter_es": "Cambio de titular"
+        },
+        {
+          "matter_code": "3.4",
+          "matter_en": "Account set-off",
+          "matter_es": "Compensación de cuentas"
+        },
+        {
+          "matter_code": "3.5",
+          "matter_en": "Basic payment accounts",
+          "matter_es": "Cuentas de pago básicas"
+        },
+        {
+          "matter_code": "3.6",
+          "matter_en": "Contractual documentation",
+          "matter_es": "Documentación contractual"
+        },
+        {
+          "matter_code": "3.7",
+          "matter_en": "Changes to terms and conditions",
+          "matter_es": "Modificación de condiciones"
+        },
+        {
+          "matter_code": "3.8",
+          "matter_en": "Rules for operating the account",
+          "matter_es": "Régimen de disposición"
+        },
+        {
+          "matter_code": "3.9",
+          "matter_en": "Information request",
+          "matter_es": "Solicitud de información"
+        },
+        {
+          "matter_code": "3.10",
+          "matter_en": "Payment account switching",
+          "matter_es": "Traslado de cuentas de pago"
+        }
+      ]
+    },
+    {
+      "product_code": "04",
+      "product_en": "Term deposits",
+      "product_es": "Depósitos a plazo",
+      "matters": [
+        {
+          "matter_code": "4.1",
+          "matter_en": "Cancellation",
+          "matter_es": "Cancelación"
+        },
+        {
+          "matter_code": "4.2",
+          "matter_en": "Interest calculation and settlement",
+          "matter_es": "Liquidación de intereses"
+        }
+      ]
+    },
+    {
+      "product_code": "05",
+      "product_en": "Electronic money",
+      "product_es": "Dinero electrónico",
+      "matters": [
+        {
+          "matter_code": "5.1",
+          "matter_en": "Prepaid funds: loading, reloading and redemption",
+          "matter_es": "Prepago: carga, recarga y devolución"
+        }
+      ]
+    },
+    {
+      "product_code": "06",
+      "product_en": "Payment instruments",
+      "product_es": "Efectos",
+      "matters": [
+        {
+          "matter_code": "6.1",
+          "matter_en": "Cheques",
+          "matter_es": "Cheques"
+        }
+      ]
+    },
+    {
+      "product_code": "07",
+      "product_en": "Garnishments and attachments",
+      "product_es": "Embargos",
+      "matters": [
+        {
+          "matter_code": "7.1",
+          "matter_en": "Public-authority debt attachments",
+          "matter_es": "Por deudas con las administraciones"
+        },
+        {
+          "matter_code": "7.2",
+          "matter_en": "Court-ordered attachments",
+          "matter_es": "Por orden judicial"
+        }
+      ]
+    },
+    {
+      "product_code": "08",
+      "product_en": "Other complaints",
+      "product_es": "Otras reclamaciones",
+      "matters": [
+        {
+          "matter_code": "8.1",
+          "matter_en": "Delay / lack of attention / deficient service",
+          "matter_es": "Demora/Desatención/Actuación Deficiente"
+        },
+        {
+          "matter_code": "8.2",
+          "matter_en": "Public debt instruments",
+          "matter_es": "Deuda pública"
+        },
+        {
+          "matter_code": "8.3",
+          "matter_en": "Inclusion in a credit-default register",
+          "matter_es": "Inclusión en registro de impagados"
+        },
+        {
+          "matter_code": "8.4",
+          "matter_en": "Failure to implement a Customer Service / Ombudsman decision",
+          "matter_es": "Incumplimiento de resolución del SAC/Defensor"
+        },
+        {
+          "matter_code": "8.5",
+          "matter_en": "Non-banking transaction",
+          "matter_es": "Operación no bancaria"
+        },
+        {
+          "matter_code": "8.6",
+          "matter_en": "Data protection",
+          "matter_es": "Protección de datos"
+        },
+        {
+          "matter_code": "8.7",
+          "matter_en": "Long-term rental / leasing services",
+          "matter_es": "Renting"
+        }
+      ]
+    },
+    {
+      "product_code": "09",
+      "product_en": "Mortgage loans",
+      "product_es": "Préstamos Hipotecarios",
+      "matters": [
+        {
+          "matter_code": "9.1",
+          "matter_en": "Fees",
+          "matter_es": "Comisiones"
+        },
+        {
+          "matter_code": "9.2",
+          "matter_en": "Dation in payment / refinancing",
+          "matter_es": "Dación en pago/Refinanciación"
+        },
+        {
+          "matter_code": "9.3",
+          "matter_en": "Mortgage-loan security",
+          "matter_es": "Garantías del préstamo hipotecario"
+        },
+        {
+          "matter_code": "9.4",
+          "matter_en": "Arrears and default",
+          "matter_es": "Morosidad"
+        },
+        {
+          "matter_code": "9.5",
+          "matter_en": "Novation and subrogation",
+          "matter_es": "Novación y subrogación"
+        },
+        {
+          "matter_code": "9.6",
+          "matter_en": "Special mortgage loans",
+          "matter_es": "Préstamos hipotecarios especiales"
+        }
+      ]
+    },
+    {
+      "product_code": "10",
+      "product_en": "Unsecured loans to SMEs / self-employed persons",
+      "product_es": "Préstamos con garantía personal a PYMES/Autónomos",
+      "matters": [
+        {
+          "matter_code": "10.1",
+          "matter_en": "COVID-19 ICO guarantees - early repayment",
+          "matter_es": "COVID-19 Avales ICO - Amortización anticipada-ICO"
+        },
+        {
+          "matter_code": "10.2",
+          "matter_en": "Refinancing",
+          "matter_es": "Refinanciación"
+        }
+      ]
+    },
+    {
+      "product_code": "11",
+      "product_en": "Unsecured consumer loans",
+      "product_es": "Préstamos con garantía personal a consumidores",
+      "matters": [
+        {
+          "matter_code": "11.1",
+          "matter_en": "Interest",
+          "matter_es": "Intereses"
+        },
+        {
+          "matter_code": "11.2",
+          "matter_en": "Refinancing",
+          "matter_es": "Refinanciación"
+        }
+      ]
+    },
+    {
+      "product_code": "12",
+      "product_en": "Cash services",
+      "product_es": "Servicio de caja",
+      "matters": [
+        {
+          "matter_code": "12.1",
+          "matter_en": "Counterfeit / damaged banknotes",
+          "matter_es": "Billetes falsos/deteriorados"
+        },
+        {
+          "matter_code": "12.2",
+          "matter_en": "Foreign-exchange transactions",
+          "matter_es": "Compraventa de divisa"
+        },
+        {
+          "matter_code": "12.3",
+          "matter_en": "Discrepancy in cash amount delivered",
+          "matter_es": "Discrepancia con el importe entregado en efectivo"
+        },
+        {
+          "matter_code": "12.4",
+          "matter_en": "ATM incidents",
+          "matter_es": "Incidencias en cajeros automáticos"
+        }
+      ]
+    },
+    {
+      "product_code": "13",
+      "product_en": "Debit / credit cards",
+      "product_es": "Tarjetas de débito/crédito",
+      "matters": [
+        {
+          "matter_code": "13.1",
+          "matter_en": "Cancellation at the cardholder's request",
+          "matter_es": "Cancelación a instancia del titular"
+        },
+        {
+          "matter_code": "13.2",
+          "matter_en": "Unilateral cancellation / blocking by the institution",
+          "matter_es": "Cancelación/bloqueo unilateral a instancia de entidad"
+        },
+        {
+          "matter_code": "13.3",
+          "matter_en": "Disputed statement / unauthorised charges",
+          "matter_es": "Disconformidad liquidación/adeudos no autorizados"
+        },
+        {
+          "matter_code": "13.4",
+          "matter_en": "ATM incidents",
+          "matter_es": "Incidencias en cajeros automáticos"
+        },
+        {
+          "matter_code": "13.5",
+          "matter_en": "Changes to terms and conditions",
+          "matter_es": "Modificación de condiciones"
+        },
+        {
+          "matter_code": "13.6",
+          "matter_en": "Point-of-sale terminals",
+          "matter_es": "Terminales punto de venta"
+        }
+      ]
+    },
+    {
+      "product_code": "14",
+      "product_en": "Revolving credit cards",
+      "product_es": "Tarjetas revolving",
+      "matters": [
+        {
+          "matter_code": "14.1",
+          "matter_en": "Fees and charges",
+          "matter_es": "Comisiones y gastos"
+        },
+        {
+          "matter_code": "14.2",
+          "matter_en": "General matters",
+          "matter_es": "Cuestiones generales"
+        },
+        {
+          "matter_code": "14.3",
+          "matter_en": "Dispute over outstanding debt",
+          "matter_es": "Disconformidad deuda pendiente"
+        },
+        {
+          "matter_code": "14.4",
+          "matter_en": "Changes to the interest rate",
+          "matter_es": "Modificaciones del tipo de interés"
+        }
+      ]
+    },
+    {
+      "product_code": "15",
+      "product_en": "Credit transfers",
+      "product_es": "Transferencias",
+      "matters": [
+        {
+          "matter_code": "15.1",
+          "matter_en": "Outside the SEPA area",
+          "matter_es": "Fuera de la zona SEPA"
+        }
+      ]
+    },
+    {
+      "product_code": "16",
+      "product_en": "CIR",
+      "product_es": "CIR",
+      "matters": [
+        {
+          "matter_code": "16.1",
+          "matter_en": "Discharge of Unsatisfied Liabilities",
+          "matter_es": "Beneficio de Exoneración del Pasivo Insatisfecho"
+        },
+        {
+          "matter_code": "16.2",
+          "matter_en": "Creditors' Agreement",
+          "matter_es": "Convenio de Acreedores"
+        },
+        {
+          "matter_code": "16.3",
+          "matter_en": "Debt cancelled; mortgaged property auctioned",
+          "matter_es": "Deuda cancelada. Subastado el bien hipotecado"
+        },
+        {
+          "matter_code": "16.4",
+          "matter_en": "Debt paid through court proceedings",
+          "matter_es": "Deuda pagada judicialmente"
+        },
+        {
+          "matter_code": "16.5",
+          "matter_en": "Legal proceedings are ongoing",
+          "matter_es": "Existe un proceso judicial en curso"
+        },
+        {
+          "matter_code": "16.6",
+          "matter_en": "Incorrect amount",
+          "matter_es": "Importe incorrecto"
+        },
+        {
+          "matter_code": "16.7",
+          "matter_en": "The debt has been paid",
+          "matter_es": "La deuda está pagada"
+        },
+        {
+          "matter_code": "16.8",
+          "matter_en": "The debt does not belong to me",
+          "matter_es": "La deuda no me corresponde"
+        },
+        {
+          "matter_code": "16.9",
+          "matter_en": "No arrears / payments are up to date",
+          "matter_es": "No existe morosidad/estoy al corriente de pago"
+        },
+        {
+          "matter_code": "16.10",
+          "matter_en": "Statute of limitations",
+          "matter_es": "Prescripción"
+        },
+        {
+          "matter_code": "16.11",
+          "matter_en": "Court ruling in favor of the claimant",
+          "matter_es": "Resolución Judicial a favor reclamante"
+        },
+        {
+          "matter_code": "16.12",
+          "matter_en": "ID theft and identity fraud",
+          "matter_es": "Robo de DNI y suplantación de personalidad"
+        },
+        {
+          "matter_code": "16.13",
+          "matter_en": "Separation/divorce debt assigned to spouse",
+          "matter_es": "Separación/divorcio-deuda asignada al cónyuge"
+        },
+        {
+          "matter_code": "16.14",
+          "matter_en": "No relationship with the institution",
+          "matter_es": "Sin relación con la entidad"
+        },
+        {
+          "matter_code": "16.15",
+          "matter_en": "Mortgage securitization",
+          "matter_es": "Titulización de la hipoteca"
+        }
+      ]
+    }
+  ]
+}
