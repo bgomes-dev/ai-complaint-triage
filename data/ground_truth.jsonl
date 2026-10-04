@@ -1,0 +1,50 @@
+{"complaint_id": "001", "expected_product": "Direct debits", "expected_matter": "SEPA direct debits"}
+{"complaint_id": "002", "expected_product": "Guarantees", "expected_matter": "Cancellation"}
+{"complaint_id": "003", "expected_product": "Current / savings accounts", "expected_matter": "Change of account holder"}
+{"complaint_id": "004", "expected_product": "Term deposits", "expected_matter": "Interest calculation and settlement"}
+{"complaint_id": "005", "expected_product": "Electronic money", "expected_matter": "Prepaid funds: loading, reloading and redemption"}
+{"complaint_id": "006", "expected_product": "Payment instruments", "expected_matter": "Cheques"}
+{"complaint_id": "007", "expected_product": "Garnishments and attachments", "expected_matter": "Public-authority debt attachments"}
+{"complaint_id": "008", "expected_product": "Other complaints", "expected_matter": "Delay / lack of attention / deficient service"}
+{"complaint_id": "009", "expected_product": "Mortgage loans", "expected_matter": "Fees"}
+{"complaint_id": "010", "expected_product": "Unsecured loans to SMEs / self-employed persons", "expected_matter": "COVID-19 ICO guarantees - early repayment"}
+{"complaint_id": "011", "expected_product": "Unsecured consumer loans", "expected_matter": "Interest"}
+{"complaint_id": "012", "expected_product": "Cash services", "expected_matter": "Counterfeit / damaged banknotes"}
+{"complaint_id": "013", "expected_product": "Debit / credit cards", "expected_matter": "Cancellation at the cardholder's request"}
+{"complaint_id": "014", "expected_product": "Revolving credit cards", "expected_matter": "Fees and charges"}
+{"complaint_id": "015", "expected_product": "Credit transfers", "expected_matter": "Outside the SEPA area"}
+{"complaint_id": "016", "expected_product": "CIR", "expected_matter": "The debt has been paid"}
+{"complaint_id": "017", "expected_product": "Direct debits", "expected_matter": "SEPA direct debits"}
+{"complaint_id": "018", "expected_product": "Guarantees", "expected_matter": "Enforcement / calling of the guarantee"}
+{"complaint_id": "019", "expected_product": "Current / savings accounts", "expected_matter": "Account opening/contract execution"}
+{"complaint_id": "020", "expected_product": "Term deposits", "expected_matter": "Cancellation"}
+{"complaint_id": "021", "expected_product": "Electronic money", "expected_matter": "Prepaid funds: loading, reloading and redemption"}
+{"complaint_id": "022", "expected_product": "Payment instruments", "expected_matter": "Cheques"}
+{"complaint_id": "023", "expected_product": "Garnishments and attachments", "expected_matter": "Court-ordered attachments"}
+{"complaint_id": "024", "expected_product": "Other complaints", "expected_matter": "Failure to implement a Customer Service / Ombudsman decision"}
+{"complaint_id": "025", "expected_product": "Mortgage loans", "expected_matter": "Dation in payment / refinancing"}
+{"complaint_id": "026", "expected_product": "Unsecured loans to SMEs / self-employed persons", "expected_matter": "Refinancing"}
+{"complaint_id": "027", "expected_product": "Unsecured consumer loans", "expected_matter": "Refinancing"}
+{"complaint_id": "028", "expected_product": "Cash services", "expected_matter": "Foreign-exchange transactions"}
+{"complaint_id": "029", "expected_product": "Debit / credit cards", "expected_matter": "Unilateral cancellation / blocking by the institution"}
+{"complaint_id": "030", "expected_product": "Revolving credit cards", "expected_matter": "Changes to the interest rate"}
+{"complaint_id": "031", "expected_product": "Credit transfers", "expected_matter": "Outside the SEPA area"}
+{"complaint_id": "032", "expected_product": "CIR", "expected_matter": "Court ruling in favor of the claimant"}
+{"complaint_id": "033", "expected_product": "Direct debits", "expected_matter": "SEPA direct debits"}
+{"complaint_id": "034", "expected_product": "Guarantees", "expected_matter": "Cancellation"}
+{"complaint_id": "035", "expected_product": "Current / savings accounts", "expected_matter": "Change of account holder"}
+{"complaint_id": "036", "expected_product": "Term deposits", "expected_matter": "Interest calculation and settlement"}
+{"complaint_id": "037", "expected_product": "Electronic money", "expected_matter": "Prepaid funds: loading, reloading and redemption"}
+{"complaint_id": "038", "expected_product": "Payment instruments", "expected_matter": "Cheques"}
+{"complaint_id": "039", "expected_product": "Garnishments and attachments", "expected_matter": "Public-authority debt attachments"}
+{"complaint_id": "040", "expected_product": "Other complaints", "expected_matter": "Delay / lack of attention / deficient service"}
+{"complaint_id": "041", "expected_product": "Mortgage loans", "expected_matter": "Mortgage-loan security"}
+{"complaint_id": "042", "expected_product": "Unsecured loans to SMEs / self-employed persons", "expected_matter": "Refinancing"}
+{"complaint_id": "043", "expected_product": "Unsecured consumer loans", "expected_matter": "Interest"}
+{"complaint_id": "044", "expected_product": "Cash services", "expected_matter": "Discrepancy in cash amount delivered"}
+{"complaint_id": "045", "expected_product": "Debit / credit cards", "expected_matter": "Cancellation at the cardholder's request"}
+{"complaint_id": "046", "expected_product": "Revolving credit cards", "expected_matter": "Fees and charges"}
+{"complaint_id": "047", "expected_product": "Credit transfers", "expected_matter": "Outside the SEPA area"}
+{"complaint_id": "048", "expected_product": "CIR", "expected_matter": "No arrears / payments are up to date"}
+{"complaint_id": "049", "expected_product": "Direct debits", "expected_matter": "SEPA direct debits"}
+{"complaint_id": "050", "expected_product": "Guarantees", "expected_matter": "Enforcement / calling of the guarantee"}

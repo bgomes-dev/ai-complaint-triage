@@ -1,0 +1,1776 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Complaint Triage & Routing Assistant | Dashboard</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="h-full font-sans antialiased text-slate-800 flex flex-col min-h-screen">
+
+    <!-- Main Container -->
+    <div class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+        
+        <!-- 1. HEADER SECTION -->
+        <header class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 md:p-8">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div>
+                    <div class="flex items-center gap-3">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-brand-50 text-brand-700 border border-brand-100">
+                            Portfolio Project
+                        </span>
+                        <span class="text-xs text-slate-400 font-mono" id="last-updated">Evaluated: Current Run</span>
+                    </div>
+                    <h1 class="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight mt-2">
+                        AI Complaint Triage & Routing Assistant
+                    </h1>
+                    <p class="text-sm md:text-base text-slate-600 mt-2 max-w-3xl leading-relaxed">
+                        Validation dashboard for an LLM-based banking complaint classification pipeline evaluated against human ground truth. It applies an automated confidence threshold for human-in-the-loop review.
+                    </p>
+                </div>
+                <div class="flex items-center gap-3 self-start md:self-auto bg-slate-50 p-3 rounded-xl border border-slate-100">
+                    <div class="p-2.5 bg-brand-500 text-white rounded-lg shadow-sm">
+                        <i data-lucide="cpu" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 font-medium uppercase tracking-wider">Model Status</p>
+                        <p class="text-xs font-semibold text-emerald-600 flex items-center gap-1.5 mt-0.5">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                            Evaluated & Ready
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- 2. OVERVIEW / KPI CARDS -->
+        <section aria-label="KPI Metrics">
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                <!-- Total Complaints -->
+                <div class="bg-white rounded-xl p-5 border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-center justify-between text-slate-500 mb-2">
+                        <span class="text-xs font-semibold uppercase tracking-wider">Total</span>
+                        <i data-lucide="inbox" class="w-4 h-4 text-slate-400"></i>
+                    </div>
+                    <p class="text-2xl font-bold text-slate-900" id="kpi-total">--</p>
+                    <p class="text-[11px] text-slate-500 mt-1">Processed samples</p>
+                </div>
+
+                <!-- Overall Accuracy -->
+                <div class="bg-white rounded-xl p-5 border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-center justify-between text-slate-500 mb-2">
+                        <span class="text-xs font-semibold uppercase tracking-wider">Overall Acc.</span>
+                        <i data-lucide="target" class="w-4 h-4 text-brand-500"></i>
+                    </div>
+                    <p class="text-2xl font-bold text-slate-900" id="kpi-overall">--</p>
+                    <p class="text-[11px] text-emerald-600 font-medium mt-1">Exact match accuracy</p>
+                </div>
+
+                <!-- Product Accuracy -->
+                <div class="bg-white rounded-xl p-5 border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-center justify-between text-slate-500 mb-2">
+                        <span class="text-xs font-semibold uppercase tracking-wider">Product Acc.</span>
+                        <i data-lucide="layers" class="w-4 h-4 text-indigo-500"></i>
+                    </div>
+                    <p class="text-2xl font-bold text-slate-900" id="kpi-product">--</p>
+                    <p class="text-[11px] text-slate-500 mt-1"><span id="kpi-product-correct">--</span> correct predictions</p>
+                </div>
+
+                <!-- Matter Accuracy -->
+                <div class="bg-white rounded-xl p-5 border border-slate-200/80 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-center justify-between text-slate-500 mb-2">
+                        <span class="text-xs font-semibold uppercase tracking-wider">Matter Acc.</span>
+                        <i data-lucide="git-branch" class="w-4 h-4 text-violet-500"></i>
+                    </div>
+                    <p class="text-2xl font-bold text-slate-900" id="kpi-matter">--</p>
+                    <p class="text-[11px] text-slate-500 mt-1"><span id="kpi-matter-correct">--</span> correct predictions</p>
+                </div>
+
+                <!-- Approved -->
+                <div class="bg-white rounded-xl p-5 border border-emerald-200/80 bg-emerald-50/20 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-center justify-between text-emerald-700 mb-2">
+                        <span class="text-xs font-semibold uppercase tracking-wider">Auto Approved</span>
+                        <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i>
+                    </div>
+                    <p class="text-2xl font-bold text-emerald-900" id="kpi-approved">--</p>
+                    <p class="text-[11px] text-emerald-700 font-medium mt-1">Straight-through processing</p>
+                </div>
+
+                <!-- Needs Review -->
+                <div class="bg-white rounded-xl p-5 border border-amber-200/80 bg-amber-50/20 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-center justify-between text-amber-700 mb-2">
+                        <span class="text-xs font-semibold uppercase tracking-wider">Needs Review</span>
+                        <i data-lucide="alert-circle" class="w-4 h-4 text-amber-600"></i>
+                    </div>
+                    <p class="text-2xl font-bold text-amber-900" id="kpi-review">--</p>
+                    <p class="text-[11px] text-amber-700 font-medium mt-1">Sent to human review</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3 & 4. VISUALISATION SECTION (Routing & Classification Charts) -->
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Routing Overview Doughnut Card -->
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                            <i data-lucide="git-pull-request" class="w-5 h-5 text-brand-500"></i>
+                            Automated Routing Breakdown
+                        </h2>
+                        <span class="text-xs px-2.5 py-1 rounded-md bg-slate-100 text-slate-700 font-medium border border-slate-200" id="confidence-threshold-badge">
+                            Threshold: --%
+                        </span>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-4">
+                        Complaints with model confidence below the threshold are routed for human review.
+                    </p>
+                </div>
+
+                <div class="relative flex justify-center items-center h-48 my-2">
+                    <canvas id="routingChart"></canvas>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 pt-4 border-t border-slate-100 text-center">
+                    <div class="p-2 rounded-lg bg-emerald-50">
+                        <span class="text-xs font-medium text-emerald-800">Approved</span>
+                        <p class="text-lg font-bold text-emerald-900" id="routing-approved-pct">--%</p>
+                    </div>
+                    <div class="p-2 rounded-lg bg-amber-50">
+                        <span class="text-xs font-medium text-amber-800">Needs Review</span>
+                        <p class="text-lg font-bold text-amber-900" id="routing-review-pct">--%</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Classification Performance Bar Chart -->
+            <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                            <i data-lucide="bar-chart-3" class="w-5 h-5 text-brand-500"></i>
+                            Classification Accuracy Performance
+                        </h2>
+                        <span class="text-xs text-slate-400">Model vs Ground Truth</span>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-4">
+                        Hierarchical accuracy evaluation across Product level and Matter level classification.
+                    </p>
+                </div>
+
+                <div class="h-56 relative">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+
+                <div class="flex items-center justify-around pt-4 border-t border-slate-100 text-xs text-slate-600">
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-sm bg-sky-500"></span>
+                        <span>Product Accuracy</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-sm bg-violet-500"></span>
+                        <span>Matter Accuracy</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-sm bg-emerald-500"></span>
+                        <span>Overall Exact Match</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NAVIGATION TABS -->
+        <div class="border-b border-slate-200">
+            <nav class="flex space-x-8" aria-label="Tabs">
+                <button onclick="switchTab('all-complaints')" id="tab-all-complaints" class="tab-btn border-brand-500 text-brand-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2">
+                    <i data-lucide="table" class="w-4 h-4"></i>
+                    All Complaints Table
+                </button>
+                <button onclick="switchTab('error-analysis')" id="tab-error-analysis" class="tab-btn border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2">
+                    <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+                    Error Analysis
+                    <span id="error-badge-count" class="ml-1 bg-red-100 text-red-700 py-0.5 px-2 rounded-full text-xs font-semibold">0</span>
+                </button>
+                <button onclick="switchTab('needs-review')" id="tab-needs-review" class="tab-btn border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2">
+                    <i data-lucide="user-check" class="w-4 h-4"></i>
+                    Human Review Queue
+                    <span id="review-badge-count" class="ml-1 bg-amber-100 text-amber-800 py-0.5 px-2 rounded-full text-xs font-semibold">0</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- TAB 1: ALL COMPLAINTS TABLE & FILTERS -->
+        <div id="view-all-complaints" class="tab-content space-y-6">
+            <!-- Filters Card -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                    <h3 class="text-sm font-semibold text-slate-900 flex items-center gap-2">
+                        <i data-lucide="filter" class="w-4 h-4 text-slate-500"></i>
+                        Filter Complaints Data
+                    </h3>
+                    <button onclick="resetFilters()" class="text-xs font-medium text-brand-600 hover:text-brand-700 hover:underline flex items-center gap-1">
+                        <i data-lucide="rotate-ccw" class="w-3 h-3"></i> Reset Filters
+                    </button>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Filter: Routing Status -->
+                    <div>
+                        <label for="filter-routing" class="block text-xs font-medium text-slate-600 mb-1">Routing Status</label>
+                        <select id="filter-routing" onchange="applyFilters()" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-slate-800 font-medium">
+                            <option value="ALL">All Routing Statuses</option>
+                            <option value="Approved">Approved Only</option>
+                            <option value="Needs Review">Needs Review Only</option>
+                        </select>
+                    </div>
+
+                    <!-- Filter: Classification Result -->
+                    <div>
+                        <label for="filter-result" class="block text-xs font-medium text-slate-600 mb-1">Classification Result</label>
+                        <select id="filter-result" onchange="applyFilters()" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-slate-800 font-medium">
+                            <option value="ALL">All Classification Results</option>
+                            <option value="Correct">Correct Predictions</option>
+                            <option value="Incorrect">Incorrect Predictions (Errors)</option>
+                        </select>
+                    </div>
+
+                    <!-- Filter: Product (Dynamic) -->
+                    <div>
+                        <label for="filter-product" class="block text-xs font-medium text-slate-600 mb-1">Product Category</label>
+                        <select id="filter-product" onchange="applyFilters()" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-lg p-2.5 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-slate-800 font-medium">
+                            <option value="ALL">All Products</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Card -->
+            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+                <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+                    <span class="text-xs font-medium text-slate-500">
+                        Showing <strong id="visible-count" class="text-slate-900">0</strong> of <strong id="total-table-count" class="text-slate-900">0</strong> complaints
+                    </span>
+                    <span class="text-xs text-slate-400">Click any row to inspect complete details</span>
+                </div>
+
+                <div class="overflow-x-auto custom-scrollbar">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-slate-50 border-b border-slate-200/80 text-slate-600 uppercase font-semibold text-[11px] tracking-wider">
+                                <th class="py-3.5 px-4 w-16">ID</th>
+                                <th class="py-3.5 px-4 w-2/5">Complaint Text</th>
+                                <th class="py-3.5 px-4">Predicted Product / Matter</th>
+                                <th class="py-3.5 px-4 w-24 text-center">Confidence</th>
+                                <th class="py-3.5 px-4 w-28 text-center">Routing</th>
+                                <th class="py-3.5 px-4 w-28 text-center">Evaluation</th>
+                                <th class="py-3.5 px-4 w-12 text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="complaints-table-body" class="divide-y divide-slate-100 text-slate-700">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: ERROR ANALYSIS SECTION -->
+        <div id="view-error-analysis" class="tab-content hidden space-y-6">
+            <div class="bg-red-50/50 border border-red-200/80 rounded-2xl p-6">
+                <div class="flex items-start gap-3">
+                    <div class="p-2 bg-red-100 text-red-700 rounded-lg">
+                        <i data-lucide="alert-octagon" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-red-900">Classification Error Deep-Dive</h3>
+                        <p class="text-xs text-red-700 mt-1">
+                            This section isolates all complaints where model prediction disagreed with human ground truth (<code>classification_correct == false</code>).
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="errors-container" class="grid grid-cols-1 gap-4">
+            </div>
+        </div>
+
+        <!-- TAB 3: HUMAN-IN-THE-LOOP (NEEDS REVIEW) SECTION -->
+        <div id="view-needs-review" class="tab-content hidden space-y-6">
+            <div class="bg-amber-50/50 border border-amber-200/80 rounded-2xl p-6">
+                <div class="flex items-start gap-3">
+                    <div class="p-2 bg-amber-100 text-amber-800 rounded-lg">
+                        <i data-lucide="shield-alert" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-amber-900">Human-in-the-Loop Review Queue</h3>
+                        <p class="text-xs text-amber-800 mt-1">
+                            Simulated operational workflow. Complaints with confidence below threshold (<span id="review-threshold-text">--%</span>) require agent validation before actioning.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="review-container" class="grid grid-cols-1 gap-4">
+            </div>
+        </div>
+
+    </div>
+
+    <!-- DETAIL MODAL -->
+    <div id="complaint-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-xl border border-slate-200 max-w-2xl w-full overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-mono font-bold px-2 py-0.5 bg-slate-200 text-slate-700 rounded" id="modal-id">#000</span>
+                    <h3 class="text-sm font-bold text-slate-900">Complaint Details & Evaluation</h3>
+                </div>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            
+            <div class="p-6 overflow-y-auto space-y-6 text-xs leading-relaxed custom-scrollbar">
+                <div>
+                    <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Original Complaint Text</h4>
+                    <div class="p-4 bg-slate-50 border border-slate-200/80 rounded-xl text-slate-800 text-sm italic font-serif" id="modal-text">
+                        --
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="p-4 rounded-xl border border-slate-200 bg-white">
+                        <span class="text-[11px] font-bold uppercase tracking-wider text-brand-600 block mb-2">Model Prediction</span>
+                        <div class="space-y-1.5">
+                            <p><strong class="text-slate-500 font-normal">Product:</strong> <span class="font-semibold text-slate-900" id="modal-pred-product">--</span></p>
+                            <p><strong class="text-slate-500 font-normal">Matter:</strong> <span class="font-semibold text-slate-900" id="modal-pred-matter">--</span></p>
+                            <p><strong class="text-slate-500 font-normal">Confidence:</strong> <span class="font-semibold text-slate-900" id="modal-pred-conf">--%</span></p>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-xl border border-slate-200 bg-white">
+                        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500 block mb-2">Human Ground Truth</span>
+                        <div class="space-y-1.5">
+                            <p><strong class="text-slate-500 font-normal">Product:</strong> <span class="font-semibold text-slate-900" id="modal-truth-product">--</span></p>
+                            <p><strong class="text-slate-500 font-normal">Matter:</strong> <span class="font-semibold text-slate-900" id="modal-truth-matter">--</span></p>
+                            <p><strong class="text-slate-500 font-normal">Status:</strong> <span id="modal-eval-status">--</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 border border-slate-100">
+                    <span class="text-slate-600">Automated Routing Outcome:</span>
+                    <span id="modal-routing-badge">--</span>
+                </div>
+            </div>
+
+            <div class="p-4 border-t border-slate-100 bg-slate-50 flex justify-end">
+                <button onclick="closeModal()" class="px-4 py-2 bg-slate-800 text-white font-medium rounded-lg hover:bg-slate-900 transition-colors">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN JAVASCRIPT LOGIC -->
+    <script>
+        // Real complaint data injected directly by Python
+        const embeddedData = {
+  "evaluation": {
+    "total_complaints": 50,
+    "product_accuracy": 0.94,
+    "matter_accuracy": 0.94,
+    "overall_accuracy": 0.94,
+    "product_correct": 47,
+    "product_incorrect": 3,
+    "matter_correct": 47,
+    "matter_incorrect": 3,
+    "classification_correct": 47,
+    "classification_incorrect": 3
+  },
+  "routing": {
+    "confidence_threshold": 0.9,
+    "approved_count": 49,
+    "needs_review_count": 1
+  },
+  "complaints": [
+    {
+      "complaint_id": "001",
+      "complaint_text": "A direct debit from EDP in the amount of €84.50 appeared on my account, which I never authorized, as I had already canceled that service last month. I want an immediate refund of the returned amount.",
+      "expected": {
+        "product": "Direct debits",
+        "matter": "SEPA direct debits"
+      },
+      "predicted": {
+        "product": "Direct debits",
+        "matter": "SEPA direct debits",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "002",
+      "complaint_text": "I requested the cancellation of the bank guarantee I provided for my tenant over two months ago, given that the lease agreement has ended and he returned the keys. They continue to charge me the quarterly guarantee fee and have not cancelled the guarantee.",
+      "expected": {
+        "product": "Guarantees",
+        "matter": "Cancellation"
+      },
+      "predicted": {
+        "product": "Guarantees",
+        "matter": "Cancellation",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "003",
+      "complaint_text": "I requested the addition of my wife as a second joint holder on my current account three weeks ago. We submitted all documentation at the branch, but so far they have not updated the customer file and she cannot access the account via the app.",
+      "expected": {
+        "product": "Current / savings accounts",
+        "matter": "Change of account holder"
+      },
+      "predicted": {
+        "product": "Current / savings accounts",
+        "matter": "Change of account holder",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "004",
+      "complaint_text": "I opened a 12-month fixed-term deposit of 10,000 euros. The term ended last week and the money was transferred to my current account, but I was not credited with the interest due according to the agreed rate of 2.5% TANB.",
+      "expected": {
+        "product": "Term deposits",
+        "matter": "Interest calculation and settlement"
+      },
+      "predicted": {
+        "product": "Term deposits",
+        "matter": "Interest calculation and settlement",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "005",
+      "complaint_text": "I tried to top up my prepaid card with 50 euros using the mobile app. The amount was debited from my main current account, but the balance on the electronic money card remains zero and I am unable to make purchases.",
+      "expected": {
+        "product": "Electronic money",
+        "matter": "Prepaid funds: loading, reloading and redemption"
+      },
+      "predicted": {
+        "product": "Electronic money",
+        "matter": "Prepaid funds: loading, reloading and redemption",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "006",
+      "complaint_text": "I deposited a cheque from another bank at the branch last Tuesday. They told me it would be available in 48 hours, but 5 business days have passed and the cheque remains uncleared without any valid explanation.",
+      "expected": {
+        "product": "Payment instruments",
+        "matter": "Cheques"
+      },
+      "predicted": {
+        "product": "Payment instruments",
+        "matter": "Cheques",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "007",
+      "complaint_text": "I received a notification that my account was frozen due to a tax authority garnishment order. However, they withheld my entire balance, violating the national minimum wage limit which is exempt from attachment by law.",
+      "expected": {
+        "product": "Garnishments and attachments",
+        "matter": "Public-authority debt attachments"
+      },
+      "predicted": {
+        "product": "Garnishments and attachments",
+        "matter": "Public-authority debt attachments",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "008",
+      "complaint_text": "I called customer support four times this week to resolve a simple issue and I am always kept on hold for over 30 minutes until the call drops. It is an absolute lack of respect and abysmal service delivery.",
+      "expected": {
+        "product": "Other complaints",
+        "matter": "Delay / lack of attention / deficient service"
+      },
+      "predicted": {
+        "product": "Other complaints",
+        "matter": "Delay / lack of attention / deficient service",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "009",
+      "complaint_text": "I was charged a credit maintenance fee of 15 euros on my mortgage loan that was not specified in the ESIS (FIN) or in the initial home loan contract.",
+      "expected": {
+        "product": "Mortgage loans",
+        "matter": "Fees"
+      },
+      "predicted": {
+        "product": "Mortgage loans",
+        "matter": "Fees",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "010",
+      "complaint_text": "My company holds an ICO COVID-19 guaranteed loan and we requested an early repayment of €20,000. The bank is creating bureaucratic obstacles and demanding unnecessary documents just to delay the process.",
+      "expected": {
+        "product": "Unsecured loans to SMEs / self-employed persons",
+        "matter": "COVID-19 ICO guarantees - early repayment"
+      },
+      "predicted": {
+        "product": "Unsecured loans to SMEs / self-employed persons",
+        "matter": "COVID-19 ICO guarantees - early repayment",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "011",
+      "complaint_text": "The interest rate applied to this month's installment of my personal loan increased without any prior notice or explanation, exceeding the benchmark index agreed upon in the contract.",
+      "expected": {
+        "product": "Unsecured consumer loans",
+        "matter": "Interest"
+      },
+      "predicted": {
+        "product": "Unsecured consumer loans",
+        "matter": "Interest",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "012",
+      "complaint_text": "I went to the branch counter to withdraw 400 euros in cash, and the staff member handed me two clearly torn 50€ banknotes taped together, refusing to exchange them on the spot.",
+      "expected": {
+        "product": "Cash services",
+        "matter": "Counterfeit / damaged banknotes"
+      },
+      "predicted": {
+        "product": "Cash services",
+        "matter": "Counterfeit / damaged banknotes",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "013",
+      "complaint_text": "My debit card expired, and I requested its definitive cancellation a month ago as I no longer needed it. However, they issued a new card and charged me the annual fee of 25 euros.",
+      "expected": {
+        "product": "Debit / credit cards",
+        "matter": "Cancellation at the cardholder's request"
+      },
+      "predicted": {
+        "product": "Debit / credit cards",
+        "matter": "Cancellation at the cardholder's request",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "014",
+      "complaint_text": "I use my revolving credit card and noticed that this month they charged installment processing fees and administrative expenses again, which I consider abusive and unitemized.",
+      "expected": {
+        "product": "Revolving credit cards",
+        "matter": "Fees and charges"
+      },
+      "predicted": {
+        "product": "Revolving credit cards",
+        "matter": "Fees and charges",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "015",
+      "complaint_text": "I made an international wire transfer to an account in the United States (outside the SEPA zone). The money left my account 10 days ago, has not reached the recipient yet, and I was already charged €45 in operational fees.",
+      "expected": {
+        "product": "Credit transfers",
+        "matter": "Outside the SEPA area"
+      },
+      "predicted": {
+        "product": "Credit transfers",
+        "matter": "Outside the SEPA area",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "016",
+      "complaint_text": "I checked my risk statement at the Central Credit Register (CIRBE) and noticed my name is still tied to an outstanding loan balance that I fully settled last year. I demand an immediate correction.",
+      "expected": {
+        "product": "CIR",
+        "matter": "The debt has been paid"
+      },
+      "predicted": {
+        "product": "CIR",
+        "matter": "The debt has been paid",
+        "confidence": 0.9
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "017",
+      "complaint_text": "I received a SEPA direct debit from Vodafone on my account, but the amount charged is €120 when my monthly invoice is only €35. I want to reject the charge and get a refund for the difference.",
+      "expected": {
+        "product": "Direct debits",
+        "matter": "SEPA direct debits"
+      },
+      "predicted": {
+        "product": "Direct debits",
+        "matter": "SEPA direct debits",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "018",
+      "complaint_text": "My company issued a bank guarantee and the beneficiary requested its enforcement. However, the bank executed the guarantee without verifying that the contractual requirements for calling it were met.",
+      "expected": {
+        "product": "Guarantees",
+        "matter": "Enforcement / calling of the guarantee"
+      },
+      "predicted": {
+        "product": "Guarantees",
+        "matter": "Enforcement / calling of the guarantee",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "019",
+      "complaint_text": "I have been trying to open a savings account via home banking for a week, but the system keeps throwing a contract validation error at the final step, preventing the formalization of the contract.",
+      "expected": {
+        "product": "Current / savings accounts",
+        "matter": "Account opening/contract execution"
+      },
+      "predicted": {
+        "product": "Current / savings accounts",
+        "matter": "Account opening/contract execution",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "020",
+      "complaint_text": "I prematurely closed my €5,000 term deposit. I knew I would forfeit the interest, but the bank also deducted €100 from my invested principal as a penalty, which is unlawful.",
+      "expected": {
+        "product": "Term deposits",
+        "matter": "Cancellation"
+      },
+      "predicted": {
+        "product": "Term deposits",
+        "matter": "Cancellation",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "021",
+      "complaint_text": "The balance on my virtual prepaid card expired, and the institution refuses to refund the remaining €35.40 I had stored there, claiming the funds have lapsed.",
+      "expected": {
+        "product": "Electronic money",
+        "matter": "Prepaid funds: loading, reloading and redemption"
+      },
+      "predicted": {
+        "product": "Electronic money",
+        "matter": "Prepaid funds: loading, reloading and redemption",
+        "confidence": 0.96
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "022",
+      "complaint_text": "I paid for a purchase with a cheque issued by your institution, but the merchant states the cheque was returned for alleged lack of funds, even though I had more than enough balance in my account.",
+      "expected": {
+        "product": "Payment instruments",
+        "matter": "Cheques"
+      },
+      "predicted": {
+        "product": "Payment instruments",
+        "matter": "Cheques",
+        "confidence": 0.98
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "023",
+      "complaint_text": "I was subject to a court garnishment on my bank account, and the bank froze my entire balance without notifying me or specifying the court case reference number.",
+      "expected": {
+        "product": "Garnishments and attachments",
+        "matter": "Court-ordered attachments"
+      },
+      "predicted": {
+        "product": "Garnishments and attachments",
+        "matter": "Court-ordered attachments",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "024",
+      "complaint_text": "I submitted a formal complaint to the Customer Service Department (SAC) over two months ago regarding an improper fee. They replied stating they would refund the amount, but to date they have failed to implement the decision.",
+      "expected": {
+        "product": "Other complaints",
+        "matter": "Failure to implement a Customer Service / Ombudsman decision"
+      },
+      "predicted": {
+        "product": "Other complaints",
+        "matter": "Failure to implement a Customer Service / Ombudsman decision",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "025",
+      "complaint_text": "I am trying to renegotiate the terms of my mortgage loan to restructure the debt due to financial hardship, but the bank refuses to evaluate my request for refinancing/dation in payment.",
+      "expected": {
+        "product": "Mortgage loans",
+        "matter": "Dation in payment / refinancing"
+      },
+      "predicted": {
+        "product": "Mortgage loans",
+        "matter": "Dation in payment / refinancing",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "026",
+      "complaint_text": "I requested the consolidation and refinancing of the personal loans my company holds with your bank, but you are taking months to respond to the viability plan presented.",
+      "expected": {
+        "product": "Unsecured loans to SMEs / self-employed persons",
+        "matter": "Refinancing"
+      },
+      "predicted": {
+        "product": "Unsecured loans to SMEs / self-employed persons",
+        "matter": "Refinancing",
+        "confidence": 0.9
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "027",
+      "complaint_text": "I requested a refinancing of my consumer loan installments due to temporary unemployment, but the bank rejected the restructuring agreement without offering any justification.",
+      "expected": {
+        "product": "Unsecured consumer loans",
+        "matter": "Refinancing"
+      },
+      "predicted": {
+        "product": "Unsecured consumer loans",
+        "matter": "Refinancing",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "028",
+      "complaint_text": "I went to buy foreign currency (USD) at the branch for a trip, and they applied an exchange rate completely out of line with market rates, along with a hidden fee.",
+      "expected": {
+        "product": "Cash services",
+        "matter": "Foreign-exchange transactions"
+      },
+      "predicted": {
+        "product": "Cash services",
+        "matter": "Foreign-exchange transactions",
+        "confidence": 0.96
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "029",
+      "complaint_text": "The bank unilaterally blocked my credit card without sending an SMS or email warning, leaving me unable to pay for my hotel while traveling abroad.",
+      "expected": {
+        "product": "Debit / credit cards",
+        "matter": "Unilateral cancellation / blocking by the institution"
+      },
+      "predicted": {
+        "product": "Debit / credit cards",
+        "matter": "Unilateral cancellation / blocking by the institution",
+        "confidence": 0.98
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "030",
+      "complaint_text": "Last month I received my revolving card statement and noticed the applied interest rate went from 18% to 22% without any contractual modification being communicated to me.",
+      "expected": {
+        "product": "Revolving credit cards",
+        "matter": "Changes to the interest rate"
+      },
+      "predicted": {
+        "product": "Revolving credit cards",
+        "matter": "Changes to the interest rate",
+        "confidence": 0.98
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "031",
+      "complaint_text": "I sent an international transfer to the UK on the 2nd, and by the 12th the beneficiary had still not received the funds, even though the amount was debited from my account on the very same day.",
+      "expected": {
+        "product": "Credit transfers",
+        "matter": "Outside the SEPA area"
+      },
+      "predicted": {
+        "product": "Credit transfers",
+        "matter": "Outside the SEPA area",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "032",
+      "complaint_text": "It shows on my CIRBE statement at the Bank of Spain that I have a defaulted amount with your bank, but I have a final court ruling declaring that debt completely null and void.",
+      "expected": {
+        "product": "CIR",
+        "matter": "Court ruling in favor of the claimant"
+      },
+      "predicted": {
+        "product": "Other complaints",
+        "matter": "Inclusion in a credit-default register",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": false,
+        "matter_correct": false,
+        "classification_correct": false
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "033",
+      "complaint_text": "I have an unauthorized debit of €49.99 on my current account from a company called 'TechServices' that I have never heard of and never gave direct debit authorization to.",
+      "expected": {
+        "product": "Direct debits",
+        "matter": "SEPA direct debits"
+      },
+      "predicted": {
+        "product": "Current / savings accounts",
+        "matter": "Unauthorised debits / credits",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": false,
+        "matter_correct": false,
+        "classification_correct": false
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "034",
+      "complaint_text": "I provided a bank guarantee for a public tender. The tender ended and the public entity issued the guarantee release document, yet the bank refuses to proceed with its cancellation.",
+      "expected": {
+        "product": "Guarantees",
+        "matter": "Cancellation"
+      },
+      "predicted": {
+        "product": "Guarantees",
+        "matter": "Cancellation",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "035",
+      "complaint_text": "I submitted all required documentation to change account holders on my current account following my father's passing, but the process has been stalled for 3 months without updates.",
+      "expected": {
+        "product": "Current / savings accounts",
+        "matter": "Change of account holder"
+      },
+      "predicted": {
+        "product": "Current / savings accounts",
+        "matter": "Change of account holder",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "036",
+      "complaint_text": "I hold a term deposit, and upon maturity, the bank calculated the net interest by applying an incorrect withholding tax and failing to honor the rate agreed upon.",
+      "expected": {
+        "product": "Term deposits",
+        "matter": "Interest calculation and settlement"
+      },
+      "predicted": {
+        "product": "Term deposits",
+        "matter": "Interest calculation and settlement",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "037",
+      "complaint_text": "I loaded €100 onto my digital wallet/prepaid card via ATM. The balance did not reflect in the system, and when I requested a refund from customer support, they said they couldn't do anything.",
+      "expected": {
+        "product": "Electronic money",
+        "matter": "Prepaid funds: loading, reloading and redemption"
+      },
+      "predicted": {
+        "product": "Electronic money",
+        "matter": "Prepaid funds: loading, reloading and redemption",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "038",
+      "complaint_text": "I ordered a chequebook from the bank, they charged me the issuance fee, but the cheques never arrived at my address and were lost without the bank offering a resolution.",
+      "expected": {
+        "product": "Payment instruments",
+        "matter": "Cheques"
+      },
+      "predicted": {
+        "product": "Payment instruments",
+        "matter": "Cheques",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "039",
+      "complaint_text": "I received a tax authority garnishment order on my account and the bank charged a garnishment processing fee of €50, which I find abusive and disproportionate.",
+      "expected": {
+        "product": "Garnishments and attachments",
+        "matter": "Public-authority debt attachments"
+      },
+      "predicted": {
+        "product": "Garnishments and attachments",
+        "matter": "Public-authority debt attachments",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "040",
+      "complaint_text": "I submitted a formal written complaint at my local branch last month regarding poor service from a staff member, and to this day I haven't received a response or case number.",
+      "expected": {
+        "product": "Other complaints",
+        "matter": "Delay / lack of attention / deficient service"
+      },
+      "predicted": {
+        "product": "Other complaints",
+        "matter": "Delay / lack of attention / deficient service",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "041",
+      "complaint_text": "I requested a change in the security of my mortgage loan (property collateral substitution), but the risk department is imposing absurd requirements and stalling the decision for months.",
+      "expected": {
+        "product": "Mortgage loans",
+        "matter": "Mortgage-loan security"
+      },
+      "predicted": {
+        "product": "Mortgage loans",
+        "matter": "Mortgage-loan security",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "042",
+      "complaint_text": "My micro-enterprise requested a restructuring of an unsecured working capital loan during the crisis, but the bank refused to execute the approved refinancing plan.",
+      "expected": {
+        "product": "Unsecured loans to SMEs / self-employed persons",
+        "matter": "Refinancing"
+      },
+      "predicted": {
+        "product": "Unsecured loans to SMEs / self-employed persons",
+        "matter": "Refinancing",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "043",
+      "complaint_text": "I have a personal loan and paid the installment on time this month, but the bank charged me late payment interest claiming the payment posted after the daily cutoff time.",
+      "expected": {
+        "product": "Unsecured consumer loans",
+        "matter": "Interest"
+      },
+      "predicted": {
+        "product": "Unsecured consumer loans",
+        "matter": "Interest",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "044",
+      "complaint_text": "I went to the teller to withdraw €1,500 in cash, and the staff member gave me €100 less than the amount signed on the receipt. When I complained immediately, they claimed the till balanced and refused to recount.",
+      "expected": {
+        "product": "Cash services",
+        "matter": "Discrepancy in cash amount delivered"
+      },
+      "predicted": {
+        "product": "Cash services",
+        "matter": "Discrepancy in cash amount delivered",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "045",
+      "complaint_text": "I canceled my credit card via registered letter within the legal timeframe, but the bank continued sending me statements charging the following year's annual fee.",
+      "expected": {
+        "product": "Debit / credit cards",
+        "matter": "Cancellation at the cardholder's request"
+      },
+      "predicted": {
+        "product": "Debit / credit cards",
+        "matter": "Cancellation at the cardholder's request",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "046",
+      "complaint_text": "I have a revolving card and have been paying monthly installments dutifully for years, but the outstanding principal barely decreases due to 24% interest rates and fees never explained to me.",
+      "expected": {
+        "product": "Revolving credit cards",
+        "matter": "Fees and charges"
+      },
+      "predicted": {
+        "product": "Revolving credit cards",
+        "matter": "Fees and charges",
+        "confidence": 0.85
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Needs Review"
+    },
+    {
+      "complaint_id": "047",
+      "complaint_text": "I made an international transfer in USD to a supplier in Mexico, and undisclosed intermediary bank charges were deducted, causing the amount to arrive incomplete.",
+      "expected": {
+        "product": "Credit transfers",
+        "matter": "Outside the SEPA area"
+      },
+      "predicted": {
+        "product": "Credit transfers",
+        "matter": "Outside the SEPA area",
+        "confidence": 0.9
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "048",
+      "complaint_text": "I am trying to get a new loan at another bank and was rejected because your bank reported overdue balances to CIRBE, whereas my account is 100% settled without any arrears.",
+      "expected": {
+        "product": "CIR",
+        "matter": "No arrears / payments are up to date"
+      },
+      "predicted": {
+        "product": "Other complaints",
+        "matter": "Inclusion in a credit-default register",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": false,
+        "matter_correct": false,
+        "classification_correct": false
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "049",
+      "complaint_text": "A direct debit was processed on my bank account by an insurance company, even though the insurance policy had been canceled by mutual agreement three months ago.",
+      "expected": {
+        "product": "Direct debits",
+        "matter": "SEPA direct debits"
+      },
+      "predicted": {
+        "product": "Direct debits",
+        "matter": "SEPA direct debits",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "050",
+      "complaint_text": "The bank executed the bank guarantee issued for my company without prior notification of the payment demand made by the creditor.",
+      "expected": {
+        "product": "Guarantees",
+        "matter": "Enforcement / calling of the guarantee"
+      },
+      "predicted": {
+        "product": "Guarantees",
+        "matter": "Enforcement / calling of the guarantee",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    }
+  ]
+};
+
+        let dashboardData = null;
+        let chartInstances = {};
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchData();
+        });
+
+        async function fetchData() {
+            const dataUrl = '../results/evaluation_results.json';
+            
+            // 1. Attempt to fetch file over HTTP (if hosted on a web server)
+            try {
+                const response = await fetch(dataUrl);
+                if (response.ok) {
+                    dashboardData = await response.json();
+                    initDashboard(dashboardData);
+                    return;
+                }
+            } catch (error) {
+                // Fallback silently if fetch fails
+            }
+
+            // 2. If fetch fails (e.g. running under file:// protocol), use embedded data
+            if (embeddedData) {
+                dashboardData = embeddedData;
+                initDashboard(dashboardData);
+            } else {
+                console.error("No JSON evaluation data found.");
+            }
+        }
+
+        function initDashboard(data) {
+            renderKPIs(data.evaluation, data.routing);
+            renderCharts(data.evaluation, data.routing);
+            populateProductFilterOptions(data.complaints);
+            renderComplaintsTable(data.complaints);
+            renderErrorAnalysis(data.complaints);
+            renderNeedsReview(data.complaints, data.routing.confidence_threshold);
+            lucide.createIcons();
+        }
+
+        function renderKPIs(evalData, routingData) {
+            document.getElementById('kpi-total').textContent = evalData.total_complaints || '--';
+            document.getElementById('kpi-overall').textContent = Math.round((evalData.overall_accuracy || 0) * 100) + '%';
+            document.getElementById('kpi-product').textContent = Math.round((evalData.product_accuracy || 0) * 100) + '%';
+            document.getElementById('kpi-matter').textContent = Math.round((evalData.matter_accuracy || 0) * 100) + '%';
+            
+            document.getElementById('kpi-product-correct').textContent = evalData.product_correct || 0;
+            document.getElementById('kpi-matter-correct').textContent = evalData.matter_correct || 0;
+
+            document.getElementById('kpi-approved').textContent = routingData.approved_count || 0;
+            document.getElementById('kpi-review').textContent = routingData.needs_review_count || 0;
+
+            const thresholdPct = Math.round((routingData.confidence_threshold || 0) * 100);
+            document.getElementById('confidence-threshold-badge').textContent = `Threshold: ${thresholdPct}%`;
+            document.getElementById('review-threshold-text').textContent = `${thresholdPct}%`;
+
+            const total = evalData.total_complaints || 1;
+            document.getElementById('routing-approved-pct').textContent = Math.round((routingData.approved_count / total) * 100) + '%';
+            document.getElementById('routing-review-pct').textContent = Math.round((routingData.needs_review_count / total) * 100) + '%';
+        }
+
+        function renderCharts(evalData, routingData) {
+            if (chartInstances.routing) chartInstances.routing.destroy();
+            if (chartInstances.performance) chartInstances.performance.destroy();
+
+            const ctxRouting = document.getElementById('routingChart').getContext('2d');
+            chartInstances.routing = new Chart(ctxRouting, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Auto Approved', 'Needs Review'],
+                    datasets: [{
+                        data: [routingData.approved_count, routingData.needs_review_count],
+                        backgroundColor: ['#10b981', '#f59e0b'],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } }
+                    },
+                    cutout: '70%'
+                }
+            });
+
+            const ctxPerf = document.getElementById('performanceChart').getContext('2d');
+            chartInstances.performance = new Chart(ctxPerf, {
+                type: 'bar',
+                data: {
+                    labels: ['Product Accuracy', 'Matter Accuracy', 'Overall Accuracy'],
+                    datasets: [{
+                        label: 'Accuracy Score (%)',
+                        data: [
+                            Math.round(evalData.product_accuracy * 100),
+                            Math.round(evalData.matter_accuracy * 100),
+                            Math.round(evalData.overall_accuracy * 100)
+                        ],
+                        backgroundColor: ['#0284c7', '#8b5cf6', '#10b981'],
+                        borderRadius: 6,
+                        barThickness: 32
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: { callback: value => value + '%' }
+                        },
+                        x: { grid: { display: false } }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+
+        function populateProductFilterOptions(complaints) {
+            const select = document.getElementById('filter-product');
+            const products = [...new Set(complaints.map(c => c.predicted.product))].sort();
+            
+            select.innerHTML = '<option value="ALL">All Products</option>';
+            products.forEach(prod => {
+                const opt = document.createElement('option');
+                opt.value = prod;
+                opt.textContent = prod;
+                select.appendChild(opt);
+            });
+        }
+
+        function renderComplaintsTable(complaints) {
+            const tbody = document.getElementById('complaints-table-body');
+            tbody.innerHTML = '';
+
+            document.getElementById('total-table-count').textContent = complaints.length;
+            document.getElementById('visible-count').textContent = complaints.length;
+
+            complaints.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-50/80 cursor-pointer transition-colors';
+                tr.onclick = () => openModal(item);
+
+                const isCorrect = item.evaluation.classification_correct;
+                const isApproved = item.routing_status === 'Approved';
+                const confidencePct = Math.round(item.predicted.confidence * 100);
+
+                tr.innerHTML = `
+                    <td class="py-3 px-4 font-mono text-slate-500 font-medium">#${item.complaint_id}</td>
+                    <td class="py-3 px-4">
+                        <p class="line-clamp-2 text-slate-800 leading-snug">${escapeHtml(item.complaint_text)}</p>
+                    </td>
+                    <td class="py-3 px-4">
+                        <div class="font-medium text-slate-900">${escapeHtml(item.predicted.product)}</div>
+                        <div class="text-[11px] text-slate-500">${escapeHtml(item.predicted.matter)}</div>
+                    </td>
+                    <td class="py-3 px-4 text-center">
+                        <span class="font-semibold ${confidencePct < 80 ? 'text-amber-600' : 'text-slate-700'}">${confidencePct}%</span>
+                    </td>
+                    <td class="py-3 px-4 text-center">
+                        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold ${isApproved ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
+                            ${item.routing_status}
+                        </span>
+                    </td>
+                    <td class="py-3 px-4 text-center">
+                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold ${isCorrect ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-red-50 text-red-700 border border-red-200'}">
+                            <i data-lucide="${isCorrect ? 'check' : 'x'}" class="w-3 h-3"></i>
+                            ${isCorrect ? 'Correct' : 'Incorrect'}
+                        </span>
+                    </td>
+                    <td class="py-3 px-4 text-center text-slate-400 hover:text-brand-600">
+                        <i data-lucide="eye" class="w-4 h-4 inline"></i>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function applyFilters() {
+            if (!dashboardData) return;
+
+            const routingFilter = document.getElementById('filter-routing').value;
+            const resultFilter = document.getElementById('filter-result').value;
+            const productFilter = document.getElementById('filter-product').value;
+
+            const filtered = dashboardData.complaints.filter(c => {
+                if (routingFilter !== 'ALL' && c.routing_status !== routingFilter) return false;
+                if (resultFilter === 'Correct' && !c.evaluation.classification_correct) return false;
+                if (resultFilter === 'Incorrect' && c.evaluation.classification_correct) return false;
+                if (productFilter !== 'ALL' && c.predicted.product !== productFilter) return false;
+                return true;
+            });
+
+            renderComplaintsTable(filtered);
+            lucide.createIcons();
+        }
+
+        function resetFilters() {
+            document.getElementById('filter-routing').value = 'ALL';
+            document.getElementById('filter-result').value = 'ALL';
+            document.getElementById('filter-product').value = 'ALL';
+            applyFilters();
+        }
+
+        function renderErrorAnalysis(complaints) {
+            const errors = complaints.filter(c => !c.evaluation.classification_correct);
+            const container = document.getElementById('errors-container');
+            document.getElementById('error-badge-count').textContent = errors.length;
+
+            container.innerHTML = '';
+
+            if (errors.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-white rounded-xl p-8 text-center text-slate-500 border border-slate-200">
+                        <i data-lucide="check-circle" class="w-8 h-8 text-emerald-500 mx-auto mb-2"></i>
+                        <p class="font-medium text-sm">No classification errors found in this evaluation run!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            errors.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-2xl border border-red-200/80 shadow-sm p-5 hover:shadow-md transition-shadow';
+                card.innerHTML = `
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-mono bg-red-100 text-red-800 font-bold px-2 py-0.5 rounded">ID #${item.complaint_id}</span>
+                            <span class="text-xs text-slate-400">Confidence: ${Math.round(item.predicted.confidence * 100)}%</span>
+                        </div>
+                        <span class="text-xs font-medium px-2.5 py-0.5 rounded-full ${item.routing_status === 'Approved' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
+                            Routing: ${item.routing_status}
+                        </span>
+                    </div>
+
+                    <div class="mb-4">
+                        <span class="text-[11px] uppercase font-semibold text-slate-400 tracking-wider">Complaint Text</span>
+                        <p class="text-xs text-slate-800 mt-1 bg-slate-50 p-3 rounded-xl border border-slate-100 italic font-serif">
+                            "${escapeHtml(item.complaint_text)}"
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                        <div class="bg-red-50/60 rounded-xl p-3 border border-red-100">
+                            <span class="font-bold text-red-900 block mb-1 flex items-center gap-1">
+                                <i data-lucide="x-circle" class="w-3.5 h-3.5 text-red-600"></i> Model Prediction
+                            </span>
+                            <p><span class="text-slate-500">Product:</span> <strong class="text-slate-800">${escapeHtml(item.predicted.product)}</strong></p>
+                            <p><span class="text-slate-500">Matter:</span> <strong class="text-slate-800">${escapeHtml(item.predicted.matter)}</strong></p>
+                        </div>
+
+                        <div class="bg-emerald-50/60 rounded-xl p-3 border border-emerald-100">
+                            <span class="font-bold text-emerald-900 block mb-1 flex items-center gap-1">
+                                <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-600"></i> Human Ground Truth
+                            </span>
+                            <p><span class="text-slate-500">Product:</span> <strong class="text-slate-800">${escapeHtml(item.expected.product)}</strong></p>
+                            <p><span class="text-slate-500">Matter:</span> <strong class="text-slate-800">${escapeHtml(item.expected.matter)}</strong></p>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderNeedsReview(complaints, threshold) {
+            const reviewItems = complaints.filter(c => c.routing_status === 'Needs Review');
+            const container = document.getElementById('review-container');
+            document.getElementById('review-badge-count').textContent = reviewItems.length;
+
+            container.innerHTML = '';
+
+            if (reviewItems.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-white rounded-xl p-8 text-center text-slate-500 border border-slate-200">
+                        <i data-lucide="check-circle" class="w-8 h-8 text-emerald-500 mx-auto mb-2"></i>
+                        <p class="font-medium text-sm">Review queue is empty. All complaints met auto-approval threshold.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            reviewItems.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-2xl border border-amber-200/80 shadow-sm p-5 hover:shadow-md transition-shadow';
+                card.innerHTML = `
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs font-mono bg-amber-100 text-amber-900 font-bold px-2 py-0.5 rounded">ID #${item.complaint_id}</span>
+                            <span class="text-xs text-amber-700 font-medium">Below Threshold (${Math.round(item.predicted.confidence * 100)}% < ${Math.round(threshold * 100)}%)</span>
+                        </div>
+                        <button onclick="openModalById('${item.complaint_id}')" class="text-xs font-semibold text-brand-600 hover:text-brand-700 flex items-center gap-1">
+                            Inspect Case <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                        </button>
+                    </div>
+
+                    <div class="mb-4">
+                        <p class="text-xs text-slate-800 bg-slate-50 p-3 rounded-xl border border-slate-100 leading-relaxed">
+                            ${escapeHtml(item.complaint_text)}
+                        </p>
+                    </div>
+
+                    <div class="flex flex-wrap items-center justify-between gap-3 text-xs bg-amber-50/40 p-3 rounded-xl border border-amber-100">
+                        <div>
+                            <span class="text-slate-500">Predicted Category:</span>
+                            <span class="font-semibold text-slate-900 ml-1">${escapeHtml(item.predicted.product)} → ${escapeHtml(item.predicted.matter)}</span>
+                        </div>
+                        <div>
+                            <span class="text-slate-500">Evaluation:</span>
+                            <span class="font-semibold ${item.evaluation.classification_correct ? 'text-emerald-700' : 'text-red-600'} ml-1">
+                                ${item.evaluation.classification_correct ? 'Correct' : 'Incorrect Prediction'}
+                            </span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function switchTab(tabKey) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('border-brand-500', 'text-brand-600');
+                btn.classList.add('border-transparent', 'text-slate-500');
+            });
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+
+            document.getElementById(`tab-${tabKey}`).classList.add('border-brand-500', 'text-brand-600');
+            document.getElementById(`tab-${tabKey}`).classList.remove('border-transparent', 'text-slate-500');
+            document.getElementById(`view-${tabKey}`).classList.remove('hidden');
+        }
+
+        function openModal(item) {
+            document.getElementById('modal-id').textContent = `#${item.complaint_id}`;
+            document.getElementById('modal-text').textContent = item.complaint_text;
+            
+            document.getElementById('modal-pred-product').textContent = item.predicted.product;
+            document.getElementById('modal-pred-matter').textContent = item.predicted.matter;
+            document.getElementById('modal-pred-conf').textContent = Math.round(item.predicted.confidence * 100) + '%';
+
+            document.getElementById('modal-truth-product').textContent = item.expected.product;
+            document.getElementById('modal-truth-matter').textContent = item.expected.matter;
+
+            const isCorrect = item.evaluation.classification_correct;
+            document.getElementById('modal-eval-status').innerHTML = `
+                <span class="inline-flex items-center gap-1 font-semibold ${isCorrect ? 'text-emerald-600' : 'text-red-600'}">
+                    <i data-lucide="${isCorrect ? 'check-circle' : 'x-circle'}" class="w-3.5 h-3.5"></i>
+                    ${isCorrect ? 'Match' : 'Mismatch'}
+                </span>
+            `;
+
+            const isApproved = item.routing_status === 'Approved';
+            document.getElementById('modal-routing-badge').innerHTML = `
+                <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${isApproved ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
+                    ${item.routing_status}
+                </span>
+            `;
+
+            document.getElementById('complaint-modal').classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function openModalById(id) {
+            if (!dashboardData) return;
+            const item = dashboardData.complaints.find(c => c.complaint_id === id);
+            if (item) openModal(item);
+        }
+
+        function closeModal() {
+            document.getElementById('complaint-modal').classList.add('hidden');
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>

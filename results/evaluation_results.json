@@ -1,0 +1,971 @@
+{
+  "evaluation": {
+    "total_complaints": 50,
+    "product_accuracy": 0.94,
+    "matter_accuracy": 0.94,
+    "overall_accuracy": 0.94,
+    "product_correct": 47,
+    "product_incorrect": 3,
+    "matter_correct": 47,
+    "matter_incorrect": 3,
+    "classification_correct": 47,
+    "classification_incorrect": 3
+  },
+  "routing": {
+    "confidence_threshold": 0.9,
+    "approved_count": 49,
+    "needs_review_count": 1
+  },
+  "complaints": [
+    {
+      "complaint_id": "001",
+      "complaint_text": "A direct debit from EDP in the amount of €84.50 appeared on my account, which I never authorized, as I had already canceled that service last month. I want an immediate refund of the returned amount.",
+      "expected": {
+        "product": "Direct debits",
+        "matter": "SEPA direct debits"
+      },
+      "predicted": {
+        "product": "Direct debits",
+        "matter": "SEPA direct debits",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "002",
+      "complaint_text": "I requested the cancellation of the bank guarantee I provided for my tenant over two months ago, given that the lease agreement has ended and he returned the keys. They continue to charge me the quarterly guarantee fee and have not cancelled the guarantee.",
+      "expected": {
+        "product": "Guarantees",
+        "matter": "Cancellation"
+      },
+      "predicted": {
+        "product": "Guarantees",
+        "matter": "Cancellation",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "003",
+      "complaint_text": "I requested the addition of my wife as a second joint holder on my current account three weeks ago. We submitted all documentation at the branch, but so far they have not updated the customer file and she cannot access the account via the app.",
+      "expected": {
+        "product": "Current / savings accounts",
+        "matter": "Change of account holder"
+      },
+      "predicted": {
+        "product": "Current / savings accounts",
+        "matter": "Change of account holder",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "004",
+      "complaint_text": "I opened a 12-month fixed-term deposit of 10,000 euros. The term ended last week and the money was transferred to my current account, but I was not credited with the interest due according to the agreed rate of 2.5% TANB.",
+      "expected": {
+        "product": "Term deposits",
+        "matter": "Interest calculation and settlement"
+      },
+      "predicted": {
+        "product": "Term deposits",
+        "matter": "Interest calculation and settlement",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "005",
+      "complaint_text": "I tried to top up my prepaid card with 50 euros using the mobile app. The amount was debited from my main current account, but the balance on the electronic money card remains zero and I am unable to make purchases.",
+      "expected": {
+        "product": "Electronic money",
+        "matter": "Prepaid funds: loading, reloading and redemption"
+      },
+      "predicted": {
+        "product": "Electronic money",
+        "matter": "Prepaid funds: loading, reloading and redemption",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "006",
+      "complaint_text": "I deposited a cheque from another bank at the branch last Tuesday. They told me it would be available in 48 hours, but 5 business days have passed and the cheque remains uncleared without any valid explanation.",
+      "expected": {
+        "product": "Payment instruments",
+        "matter": "Cheques"
+      },
+      "predicted": {
+        "product": "Payment instruments",
+        "matter": "Cheques",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "007",
+      "complaint_text": "I received a notification that my account was frozen due to a tax authority garnishment order. However, they withheld my entire balance, violating the national minimum wage limit which is exempt from attachment by law.",
+      "expected": {
+        "product": "Garnishments and attachments",
+        "matter": "Public-authority debt attachments"
+      },
+      "predicted": {
+        "product": "Garnishments and attachments",
+        "matter": "Public-authority debt attachments",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "008",
+      "complaint_text": "I called customer support four times this week to resolve a simple issue and I am always kept on hold for over 30 minutes until the call drops. It is an absolute lack of respect and abysmal service delivery.",
+      "expected": {
+        "product": "Other complaints",
+        "matter": "Delay / lack of attention / deficient service"
+      },
+      "predicted": {
+        "product": "Other complaints",
+        "matter": "Delay / lack of attention / deficient service",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "009",
+      "complaint_text": "I was charged a credit maintenance fee of 15 euros on my mortgage loan that was not specified in the ESIS (FIN) or in the initial home loan contract.",
+      "expected": {
+        "product": "Mortgage loans",
+        "matter": "Fees"
+      },
+      "predicted": {
+        "product": "Mortgage loans",
+        "matter": "Fees",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "010",
+      "complaint_text": "My company holds an ICO COVID-19 guaranteed loan and we requested an early repayment of €20,000. The bank is creating bureaucratic obstacles and demanding unnecessary documents just to delay the process.",
+      "expected": {
+        "product": "Unsecured loans to SMEs / self-employed persons",
+        "matter": "COVID-19 ICO guarantees - early repayment"
+      },
+      "predicted": {
+        "product": "Unsecured loans to SMEs / self-employed persons",
+        "matter": "COVID-19 ICO guarantees - early repayment",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "011",
+      "complaint_text": "The interest rate applied to this month's installment of my personal loan increased without any prior notice or explanation, exceeding the benchmark index agreed upon in the contract.",
+      "expected": {
+        "product": "Unsecured consumer loans",
+        "matter": "Interest"
+      },
+      "predicted": {
+        "product": "Unsecured consumer loans",
+        "matter": "Interest",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "012",
+      "complaint_text": "I went to the branch counter to withdraw 400 euros in cash, and the staff member handed me two clearly torn 50€ banknotes taped together, refusing to exchange them on the spot.",
+      "expected": {
+        "product": "Cash services",
+        "matter": "Counterfeit / damaged banknotes"
+      },
+      "predicted": {
+        "product": "Cash services",
+        "matter": "Counterfeit / damaged banknotes",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "013",
+      "complaint_text": "My debit card expired, and I requested its definitive cancellation a month ago as I no longer needed it. However, they issued a new card and charged me the annual fee of 25 euros.",
+      "expected": {
+        "product": "Debit / credit cards",
+        "matter": "Cancellation at the cardholder's request"
+      },
+      "predicted": {
+        "product": "Debit / credit cards",
+        "matter": "Cancellation at the cardholder's request",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "014",
+      "complaint_text": "I use my revolving credit card and noticed that this month they charged installment processing fees and administrative expenses again, which I consider abusive and unitemized.",
+      "expected": {
+        "product": "Revolving credit cards",
+        "matter": "Fees and charges"
+      },
+      "predicted": {
+        "product": "Revolving credit cards",
+        "matter": "Fees and charges",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "015",
+      "complaint_text": "I made an international wire transfer to an account in the United States (outside the SEPA zone). The money left my account 10 days ago, has not reached the recipient yet, and I was already charged €45 in operational fees.",
+      "expected": {
+        "product": "Credit transfers",
+        "matter": "Outside the SEPA area"
+      },
+      "predicted": {
+        "product": "Credit transfers",
+        "matter": "Outside the SEPA area",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "016",
+      "complaint_text": "I checked my risk statement at the Central Credit Register (CIRBE) and noticed my name is still tied to an outstanding loan balance that I fully settled last year. I demand an immediate correction.",
+      "expected": {
+        "product": "CIR",
+        "matter": "The debt has been paid"
+      },
+      "predicted": {
+        "product": "CIR",
+        "matter": "The debt has been paid",
+        "confidence": 0.9
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "017",
+      "complaint_text": "I received a SEPA direct debit from Vodafone on my account, but the amount charged is €120 when my monthly invoice is only €35. I want to reject the charge and get a refund for the difference.",
+      "expected": {
+        "product": "Direct debits",
+        "matter": "SEPA direct debits"
+      },
+      "predicted": {
+        "product": "Direct debits",
+        "matter": "SEPA direct debits",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "018",
+      "complaint_text": "My company issued a bank guarantee and the beneficiary requested its enforcement. However, the bank executed the guarantee without verifying that the contractual requirements for calling it were met.",
+      "expected": {
+        "product": "Guarantees",
+        "matter": "Enforcement / calling of the guarantee"
+      },
+      "predicted": {
+        "product": "Guarantees",
+        "matter": "Enforcement / calling of the guarantee",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "019",
+      "complaint_text": "I have been trying to open a savings account via home banking for a week, but the system keeps throwing a contract validation error at the final step, preventing the formalization of the contract.",
+      "expected": {
+        "product": "Current / savings accounts",
+        "matter": "Account opening/contract execution"
+      },
+      "predicted": {
+        "product": "Current / savings accounts",
+        "matter": "Account opening/contract execution",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "020",
+      "complaint_text": "I prematurely closed my €5,000 term deposit. I knew I would forfeit the interest, but the bank also deducted €100 from my invested principal as a penalty, which is unlawful.",
+      "expected": {
+        "product": "Term deposits",
+        "matter": "Cancellation"
+      },
+      "predicted": {
+        "product": "Term deposits",
+        "matter": "Cancellation",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "021",
+      "complaint_text": "The balance on my virtual prepaid card expired, and the institution refuses to refund the remaining €35.40 I had stored there, claiming the funds have lapsed.",
+      "expected": {
+        "product": "Electronic money",
+        "matter": "Prepaid funds: loading, reloading and redemption"
+      },
+      "predicted": {
+        "product": "Electronic money",
+        "matter": "Prepaid funds: loading, reloading and redemption",
+        "confidence": 0.96
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "022",
+      "complaint_text": "I paid for a purchase with a cheque issued by your institution, but the merchant states the cheque was returned for alleged lack of funds, even though I had more than enough balance in my account.",
+      "expected": {
+        "product": "Payment instruments",
+        "matter": "Cheques"
+      },
+      "predicted": {
+        "product": "Payment instruments",
+        "matter": "Cheques",
+        "confidence": 0.98
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "023",
+      "complaint_text": "I was subject to a court garnishment on my bank account, and the bank froze my entire balance without notifying me or specifying the court case reference number.",
+      "expected": {
+        "product": "Garnishments and attachments",
+        "matter": "Court-ordered attachments"
+      },
+      "predicted": {
+        "product": "Garnishments and attachments",
+        "matter": "Court-ordered attachments",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "024",
+      "complaint_text": "I submitted a formal complaint to the Customer Service Department (SAC) over two months ago regarding an improper fee. They replied stating they would refund the amount, but to date they have failed to implement the decision.",
+      "expected": {
+        "product": "Other complaints",
+        "matter": "Failure to implement a Customer Service / Ombudsman decision"
+      },
+      "predicted": {
+        "product": "Other complaints",
+        "matter": "Failure to implement a Customer Service / Ombudsman decision",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "025",
+      "complaint_text": "I am trying to renegotiate the terms of my mortgage loan to restructure the debt due to financial hardship, but the bank refuses to evaluate my request for refinancing/dation in payment.",
+      "expected": {
+        "product": "Mortgage loans",
+        "matter": "Dation in payment / refinancing"
+      },
+      "predicted": {
+        "product": "Mortgage loans",
+        "matter": "Dation in payment / refinancing",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "026",
+      "complaint_text": "I requested the consolidation and refinancing of the personal loans my company holds with your bank, but you are taking months to respond to the viability plan presented.",
+      "expected": {
+        "product": "Unsecured loans to SMEs / self-employed persons",
+        "matter": "Refinancing"
+      },
+      "predicted": {
+        "product": "Unsecured loans to SMEs / self-employed persons",
+        "matter": "Refinancing",
+        "confidence": 0.9
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "027",
+      "complaint_text": "I requested a refinancing of my consumer loan installments due to temporary unemployment, but the bank rejected the restructuring agreement without offering any justification.",
+      "expected": {
+        "product": "Unsecured consumer loans",
+        "matter": "Refinancing"
+      },
+      "predicted": {
+        "product": "Unsecured consumer loans",
+        "matter": "Refinancing",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "028",
+      "complaint_text": "I went to buy foreign currency (USD) at the branch for a trip, and they applied an exchange rate completely out of line with market rates, along with a hidden fee.",
+      "expected": {
+        "product": "Cash services",
+        "matter": "Foreign-exchange transactions"
+      },
+      "predicted": {
+        "product": "Cash services",
+        "matter": "Foreign-exchange transactions",
+        "confidence": 0.96
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "029",
+      "complaint_text": "The bank unilaterally blocked my credit card without sending an SMS or email warning, leaving me unable to pay for my hotel while traveling abroad.",
+      "expected": {
+        "product": "Debit / credit cards",
+        "matter": "Unilateral cancellation / blocking by the institution"
+      },
+      "predicted": {
+        "product": "Debit / credit cards",
+        "matter": "Unilateral cancellation / blocking by the institution",
+        "confidence": 0.98
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "030",
+      "complaint_text": "Last month I received my revolving card statement and noticed the applied interest rate went from 18% to 22% without any contractual modification being communicated to me.",
+      "expected": {
+        "product": "Revolving credit cards",
+        "matter": "Changes to the interest rate"
+      },
+      "predicted": {
+        "product": "Revolving credit cards",
+        "matter": "Changes to the interest rate",
+        "confidence": 0.98
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "031",
+      "complaint_text": "I sent an international transfer to the UK on the 2nd, and by the 12th the beneficiary had still not received the funds, even though the amount was debited from my account on the very same day.",
+      "expected": {
+        "product": "Credit transfers",
+        "matter": "Outside the SEPA area"
+      },
+      "predicted": {
+        "product": "Credit transfers",
+        "matter": "Outside the SEPA area",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "032",
+      "complaint_text": "It shows on my CIRBE statement at the Bank of Spain that I have a defaulted amount with your bank, but I have a final court ruling declaring that debt completely null and void.",
+      "expected": {
+        "product": "CIR",
+        "matter": "Court ruling in favor of the claimant"
+      },
+      "predicted": {
+        "product": "Other complaints",
+        "matter": "Inclusion in a credit-default register",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": false,
+        "matter_correct": false,
+        "classification_correct": false
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "033",
+      "complaint_text": "I have an unauthorized debit of €49.99 on my current account from a company called 'TechServices' that I have never heard of and never gave direct debit authorization to.",
+      "expected": {
+        "product": "Direct debits",
+        "matter": "SEPA direct debits"
+      },
+      "predicted": {
+        "product": "Current / savings accounts",
+        "matter": "Unauthorised debits / credits",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": false,
+        "matter_correct": false,
+        "classification_correct": false
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "034",
+      "complaint_text": "I provided a bank guarantee for a public tender. The tender ended and the public entity issued the guarantee release document, yet the bank refuses to proceed with its cancellation.",
+      "expected": {
+        "product": "Guarantees",
+        "matter": "Cancellation"
+      },
+      "predicted": {
+        "product": "Guarantees",
+        "matter": "Cancellation",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "035",
+      "complaint_text": "I submitted all required documentation to change account holders on my current account following my father's passing, but the process has been stalled for 3 months without updates.",
+      "expected": {
+        "product": "Current / savings accounts",
+        "matter": "Change of account holder"
+      },
+      "predicted": {
+        "product": "Current / savings accounts",
+        "matter": "Change of account holder",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "036",
+      "complaint_text": "I hold a term deposit, and upon maturity, the bank calculated the net interest by applying an incorrect withholding tax and failing to honor the rate agreed upon.",
+      "expected": {
+        "product": "Term deposits",
+        "matter": "Interest calculation and settlement"
+      },
+      "predicted": {
+        "product": "Term deposits",
+        "matter": "Interest calculation and settlement",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "037",
+      "complaint_text": "I loaded €100 onto my digital wallet/prepaid card via ATM. The balance did not reflect in the system, and when I requested a refund from customer support, they said they couldn't do anything.",
+      "expected": {
+        "product": "Electronic money",
+        "matter": "Prepaid funds: loading, reloading and redemption"
+      },
+      "predicted": {
+        "product": "Electronic money",
+        "matter": "Prepaid funds: loading, reloading and redemption",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "038",
+      "complaint_text": "I ordered a chequebook from the bank, they charged me the issuance fee, but the cheques never arrived at my address and were lost without the bank offering a resolution.",
+      "expected": {
+        "product": "Payment instruments",
+        "matter": "Cheques"
+      },
+      "predicted": {
+        "product": "Payment instruments",
+        "matter": "Cheques",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "039",
+      "complaint_text": "I received a tax authority garnishment order on my account and the bank charged a garnishment processing fee of €50, which I find abusive and disproportionate.",
+      "expected": {
+        "product": "Garnishments and attachments",
+        "matter": "Public-authority debt attachments"
+      },
+      "predicted": {
+        "product": "Garnishments and attachments",
+        "matter": "Public-authority debt attachments",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "040",
+      "complaint_text": "I submitted a formal written complaint at my local branch last month regarding poor service from a staff member, and to this day I haven't received a response or case number.",
+      "expected": {
+        "product": "Other complaints",
+        "matter": "Delay / lack of attention / deficient service"
+      },
+      "predicted": {
+        "product": "Other complaints",
+        "matter": "Delay / lack of attention / deficient service",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "041",
+      "complaint_text": "I requested a change in the security of my mortgage loan (property collateral substitution), but the risk department is imposing absurd requirements and stalling the decision for months.",
+      "expected": {
+        "product": "Mortgage loans",
+        "matter": "Mortgage-loan security"
+      },
+      "predicted": {
+        "product": "Mortgage loans",
+        "matter": "Mortgage-loan security",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "042",
+      "complaint_text": "My micro-enterprise requested a restructuring of an unsecured working capital loan during the crisis, but the bank refused to execute the approved refinancing plan.",
+      "expected": {
+        "product": "Unsecured loans to SMEs / self-employed persons",
+        "matter": "Refinancing"
+      },
+      "predicted": {
+        "product": "Unsecured loans to SMEs / self-employed persons",
+        "matter": "Refinancing",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "043",
+      "complaint_text": "I have a personal loan and paid the installment on time this month, but the bank charged me late payment interest claiming the payment posted after the daily cutoff time.",
+      "expected": {
+        "product": "Unsecured consumer loans",
+        "matter": "Interest"
+      },
+      "predicted": {
+        "product": "Unsecured consumer loans",
+        "matter": "Interest",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "044",
+      "complaint_text": "I went to the teller to withdraw €1,500 in cash, and the staff member gave me €100 less than the amount signed on the receipt. When I complained immediately, they claimed the till balanced and refused to recount.",
+      "expected": {
+        "product": "Cash services",
+        "matter": "Discrepancy in cash amount delivered"
+      },
+      "predicted": {
+        "product": "Cash services",
+        "matter": "Discrepancy in cash amount delivered",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "045",
+      "complaint_text": "I canceled my credit card via registered letter within the legal timeframe, but the bank continued sending me statements charging the following year's annual fee.",
+      "expected": {
+        "product": "Debit / credit cards",
+        "matter": "Cancellation at the cardholder's request"
+      },
+      "predicted": {
+        "product": "Debit / credit cards",
+        "matter": "Cancellation at the cardholder's request",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "046",
+      "complaint_text": "I have a revolving card and have been paying monthly installments dutifully for years, but the outstanding principal barely decreases due to 24% interest rates and fees never explained to me.",
+      "expected": {
+        "product": "Revolving credit cards",
+        "matter": "Fees and charges"
+      },
+      "predicted": {
+        "product": "Revolving credit cards",
+        "matter": "Fees and charges",
+        "confidence": 0.85
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Needs Review"
+    },
+    {
+      "complaint_id": "047",
+      "complaint_text": "I made an international transfer in USD to a supplier in Mexico, and undisclosed intermediary bank charges were deducted, causing the amount to arrive incomplete.",
+      "expected": {
+        "product": "Credit transfers",
+        "matter": "Outside the SEPA area"
+      },
+      "predicted": {
+        "product": "Credit transfers",
+        "matter": "Outside the SEPA area",
+        "confidence": 0.9
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "048",
+      "complaint_text": "I am trying to get a new loan at another bank and was rejected because your bank reported overdue balances to CIRBE, whereas my account is 100% settled without any arrears.",
+      "expected": {
+        "product": "CIR",
+        "matter": "No arrears / payments are up to date"
+      },
+      "predicted": {
+        "product": "Other complaints",
+        "matter": "Inclusion in a credit-default register",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": false,
+        "matter_correct": false,
+        "classification_correct": false
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "049",
+      "complaint_text": "A direct debit was processed on my bank account by an insurance company, even though the insurance policy had been canceled by mutual agreement three months ago.",
+      "expected": {
+        "product": "Direct debits",
+        "matter": "SEPA direct debits"
+      },
+      "predicted": {
+        "product": "Direct debits",
+        "matter": "SEPA direct debits",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    },
+    {
+      "complaint_id": "050",
+      "complaint_text": "The bank executed the bank guarantee issued for my company without prior notification of the payment demand made by the creditor.",
+      "expected": {
+        "product": "Guarantees",
+        "matter": "Enforcement / calling of the guarantee"
+      },
+      "predicted": {
+        "product": "Guarantees",
+        "matter": "Enforcement / calling of the guarantee",
+        "confidence": 0.95
+      },
+      "evaluation": {
+        "product_correct": true,
+        "matter_correct": true,
+        "classification_correct": true
+      },
+      "routing_status": "Approved"
+    }
+  ]
+}
